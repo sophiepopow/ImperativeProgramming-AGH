@@ -10,17 +10,47 @@
 #include <string.h>
 #include <stdbool.h>
 #include <string.h>
-// --MARK: List and Person structs:
+
+// --MARK: Call struct:
+
+typedef struct Call{
+    char* phone_number;
+    char* name;
+    char type;
+    struct Call* next;
+}Call;
+
 
 // --MARK: Hashing function:
-uint hashfunc(const char* name) {
-    uint h = 0;
-    for(uint i=0; i<strlen(name); i++) {
+int hashfunc(const char* name) {
+    int h = 0;
+    for(int i=0; i<strlen(name); i++) {
         h = h*31 + name[i];
     }
     return h;
 }
+
 // --MARK: Add Person to the list:
+void add(Call** map, char* name, char* number, int n){
+    int hash = hashfunc(name)%n;
+    
+    Call* newUser = malloc(sizeof(Call));
+    newUser->name = name;
+    newUser->phone_number = number;
+    newUser->next = NULL;
+    
+    Call* head = map[hash];
+    
+    if(head == NULL){
+        map[hash] = newUser;
+        return;
+    }
+    while(head->next != NULL){
+        head=head->next;
+    }
+    head->next = newUser;
+
+}
 
 // --MARK: Check if person exists in list:
 
