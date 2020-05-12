@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		C1A0AB5724674AD1000CD65E /* main.c in Sources */ = {isa = PBXBuildFile; fileRef = C1A0AB5624674AD1000CD65E /* main.c */; };
+		C1A0AB60246992E5000CD65E /* hashumappu.c in Sources */ = {isa = PBXBuildFile; fileRef = C1A0AB5F246992E5000CD65E /* hashumappu.c */; };
+		C1A0AB6224699329000CD65E /* podwojnehasshumappu.c in Sources */ = {isa = PBXBuildFile; fileRef = C1A0AB6124699329000CD65E /* podwojnehasshumappu.c */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -25,6 +27,8 @@
 /* Begin PBXFileReference section */
 		C1A0AB5324674AD1000CD65E /* ListHashMap */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = ListHashMap; sourceTree = BUILT_PRODUCTS_DIR; };
 		C1A0AB5624674AD1000CD65E /* main.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = main.c; sourceTree = "<group>"; };
+		C1A0AB5F246992E5000CD65E /* hashumappu.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = hashumappu.c; sourceTree = "<group>"; };
+		C1A0AB6124699329000CD65E /* podwojnehasshumappu.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = podwojnehasshumappu.c; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -58,6 +62,8 @@
 			isa = PBXGroup;
 			children = (
 				C1A0AB5624674AD1000CD65E /* main.c */,
+				C1A0AB5F246992E5000CD65E /* hashumappu.c */,
+				C1A0AB6124699329000CD65E /* podwojnehasshumappu.c */,
 			);
 			path = ListHashMap;
 			sourceTree = "<group>";
@@ -119,7 +125,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C1A0AB6224699329000CD65E /* podwojnehasshumappu.c in Sources */,
 				C1A0AB5724674AD1000CD65E /* main.c in Sources */,
+				C1A0AB60246992E5000CD65E /* hashumappu.c in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
