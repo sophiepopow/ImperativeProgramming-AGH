@@ -11,20 +11,14 @@
 #include <string.h>
 #include <stdio.h>
 
-#define MAX_CHARS 31
 
-typedef struct Person{
-    int phone_number;
-    char *name;
-}Person;
+typedef struct Call{
+    char* phone_number;
+    char* name;
+    char type;
+    struct Call* next;
+}Call;
 
-typedef struct List{
-    Person* person;
-    struct List* next;
-}List;
-
-
-// funkcja hash string -> int
 int hash(char * str){
 
     int hash_value = 0;
@@ -35,91 +29,93 @@ int hash(char * str){
     return hash_value;
 }
 
-Person* addCall(Person* map, Person p, int n){
+void addCall(Call** map, char* name, char* number, int n){
     int index;
-    index = hash(p.name)%n;
-    int i = 2;
-    while(i<n && map[index]!= NULL){
-        index = (i*hash(p.name))%n;
-        i++;
-    }
-    map[index] = p;
-    return map;
-}
-int searchForIndex(Person* map, char* name, int n){
     index = hash(name)%n;
     int i = 2;
-    while(i<n && map[index].name != name){
+    while(i<n && map[index]!= NULL){
         index = (i*hash(name))%n;
         i++;
     }
-    if(map[index].name == name){
+    map[index]->name = name;
+    map[index]->phone_number = number;
+}
+int searchForIndex(Call** map, char* name, int n){
+    int index = hash(name)%n;
+    int i = 2;
+    while(i<n && strcmp(map[index]->name, name)){
+        index = (i*hash(name))%n;
+        i++;
+    }
+    if(!strcmp(map[index]->name, name)){
         return index;
     }
-    else return NULL;
+    else return -1;
 }
 
-void removeCall(Person* map, char* name, int n){
-    index = searchForIndex(int* map, char* name, int n);
-    if(index != NULL){
+void removeCall(Call** map, char* name, int n){
+    int index = searchForIndex(map, name, n);
+    if(index != -1){
         map[index] = NULL;
     }
 }
 
-Person* getCall(Person* map, char* name, int n){
-    index = searchForIndex(int* map, char* name, int n);
-    if(index != NULL){
-        return map[index];
+void getCall(Call** map, char* name, int n){
+    int index = searchForIndex(map, name, n);
+    if(index != -1){
+        printf("%s\n", map[index]->phone_number);
     }
-    return NULL;
+    printf("\n");
 }
+
+
 
 int main(int argc, const char * argv[]) {
     int z;
     scanf("%d", &z);
-
+    
     while (z--) {
         int n, k;
-        char op;
-        char tmp_name[MAX_CHARS], tmp_phone[MAX_CHARS];
+        scanf("%d %d",&n,&k);
 
-        scanf("%d", &n);
-        scanf("%d", &k);
 
-        int size = n * 20;
+        Call** map = malloc(n*sizeof(Call*));
 
-        List** map = (List**)calloc(size, sizeof(Person*));
-
-        for (int i = 0; i < size; i++)
-        {
-            map[i] = (List*) malloc(sizeof(Person));
+        for (int i = 0; i < n; i++)
             map[i] = NULL;
-        }
 
-        for (int i = 0; i < k; i++)
-        {
-            do { scanf("%c", &op); } while(isspace(op));
+        for (int i = 0; i < k; i++) {
 
-            switch(op) {
-                case 'a':
-                    scanf("%s", tmp_name);
-                    scanf("%s", tmp_phone);
-                    addCall(map, tmp_name, tmp_phone, size);
-                    break;
-                case 'r':
-                    scanf("%s", tmp_name);
-                    removeCall(map, tmp_name, size);
-                    break;
-                case 'g':
-                    scanf("%s", tmp_name);
-                    char* num = getCall(map, tmp_name, size);
-                    printf("%s\n", num ? num : "");
-                    break;
-            }
+            struct Call call;
+            char *sign = malloc(sizeof(char));
+            call.name = calloc(32,sizeof(char));
+            call.phone_number = calloc(32,sizeof(char));
+            scanf("%s",sign);
+            call.type = sign[0];
+
+            switch (call.type)
+            {
+            case 'a':
+                scanf("%s %s",call.name,call.phone_number);
+                addCall(map, call.name, call.phone_number, n);
+                break;
+
+            case 'r':
+                scanf("%s",call.name);
+                removeCall(map, call.name, n);
+                break;
+
+            case 'g':
+                scanf("%s",call.name);
+                getCall(map, call.name, n);
+                break;
+
+            };
+
         }
+        free(map);
     }
 }
-
 
 //1
 //4
