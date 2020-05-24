@@ -60,7 +60,7 @@ void addNode(SkipList *sl, int level, int value)
         while(p->next[i]->value < value) p = p->next[i];
         prev[i] = p;
     }
-    if(p->next[0]->value == value) return; // element already exists
+    //if(p->next[0]->value == value) return; // element already exists
 
     for(int i=level-1; i>=0; i--)
     {
