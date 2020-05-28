@@ -12,7 +12,7 @@
 
 typedef struct Node {
     int value;
-    struct Node **next;
+    struct Node *next[];
 } Node;
 
 typedef struct SkipList {
@@ -49,10 +49,9 @@ int rand_level(int max_level)
 
 void addNode(SkipList *sl, int level, int value)
 {
-    Node *new_node = (Node*)malloc(sizeof(Node));
+    Node *new_node = (Node*)malloc(sizeof(Node) + sl->max_level*(sizeof(Node*)));
     new_node->value = value;
-    new_node->next = (Node **) malloc(level*sizeof(Node*));
-
+    
     Node *prev[level];
     Node *p = sl->first;
     for(int i=level-1; i>=0; i--)
@@ -74,13 +73,12 @@ SkipList *createSkiplist(int max_level, int n)
     SkipList *sl = (SkipList*)malloc(sizeof(SkipList));
     sl->max_level = max_level;
 
-    sl->first = (Node*)malloc(sizeof(Node));
+    sl->first = (Node*)malloc(sizeof(Node) + max_level*(sizeof(Node*)));
     sl->first->value = INT_MIN;
-    sl->first->next = (Node**)malloc(max_level*sizeof(Node*));
+    
 
-    sl->last = (Node*)malloc(sizeof(Node));
+    sl->last = (Node*)malloc(sizeof(Node) + max_level*(sizeof(Node*)));
     sl->last->value = INT_MAX;
-    sl->last->next = (Node**)malloc(max_level*sizeof(Node*));
     
     for (int i = 0; i < max_level; i++) {
         sl->first->next[i] = malloc(sizeof(Node));
@@ -168,7 +166,6 @@ int main(int argc, const char * argv[]) {
         
         
     }
-   
     return 0;
 }
 
