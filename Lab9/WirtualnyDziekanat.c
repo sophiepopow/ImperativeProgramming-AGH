@@ -10,16 +10,34 @@
 #include <stdbool.h>
 #include <string.h>
 
-typedef struct Node {
-    
-}
+int MAX_NAME_SIZE = 30;
 
-Node* create_node(int value,char *name) {
+typedef struct Node {
+    int id;
+    char* name;
+    struct Node *left, *right, *parent;
+} Node;
+
+Node* create_node(int id,char *name) {
+    Node* student = (node*)malloc(sizeof(Node));
     
+    student->name = malloc(MAX_NAME_SIZE*sizeof(char));
+    strcpy(student->name,name);
+    
+    student->id = id;
+    student->left = NULL;
+    student->right = NULL;
+    student->parent = NULL;
+    
+    return student;
 }
 
 void delete_tree(Node* root) {
-    
+    if (root = NULL)
+        return;
+    delete_tree(root->left);
+    delete_tree(root->right);
+    free(root);
 }
 
 void insert(Node* root, Node* student) {
@@ -35,7 +53,12 @@ void delete(Node* root) {
 }
 
 Node* minimum(Node* root) {
+    if (root == NULL)
+        return NULL;
+    if (root->left == NULL)
+        return root;
     
+    return minimum(root->left);
 }
 
 int main() {
