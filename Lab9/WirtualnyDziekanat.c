@@ -41,15 +41,67 @@ void delete_tree(Node* root) {
 }
 
 void insert(Node* root, Node* student) {
+    parent = NULL;
     
+    while(root != NULL){
+        parent = root;
+        
+        if (root->id < student->id)
+            root = root.right;
+        else
+            root = root.left
+    }
+    
+    if (parent->id < student.id)
+        parent->right = student;
+    else
+        parent->left = student;
+    
+    student->parent = parent;
 }
 
 Node* find(Node* root, int id) {
+    if(root == NULL)
+        return NULL;
+    if(root->id == id)
+        return root;
     
+    while(root != NULL && root->id != id){
+        if(root->id < id)
+            root = root.right;
+        else if (root->id > id)
+            root = root.left;
+        else if (root->id == id)
+            return root;
+    }
+    return NULL;
 }
 
-void delete(Node* root) {
-    
+void delete(Node* root, int id) {
+    if( root == NULL)
+        return NULL;
+    if( id < root->id )
+        root->left = delete(root->left, id);
+    else if( id > root->id )
+        root->right = delete(root->right, id);
+    else {
+        if( root->right == NULL){
+            Node* tmp = root->right;
+            free(root);
+            return tmp;
+        }
+        else if( root->left == NULL){
+            Node* tmp = root->left;
+            free(root);
+            return tmp;
+        }
+        
+        Node* tmp = minimum(root->right);
+        root->id = tmp->id;
+        root->name = tmp->name;
+        root->right = delete(root->right, root->id);
+    }
+    return root;
 }
 
 Node* minimum(Node* root) {
